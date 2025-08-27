@@ -12,13 +12,14 @@ services:
       - ./initdb:/docker-entrypoint-initdb.d
       - ./seed:/seed:ro
 
-  # Runs on every `docker compose up`, waits for DB to be ready, then imports seed/*.geojson
+  # Seeder runs every 60s: waits for DB, seeds, sleeps, repeats.
   seeder:
     image: postgis-dev:latest
     depends_on:
       - db
     environment:
       POSTGRES_HOST: db
+      SEED_MODE: replace   # 'replace' -> TRUNCATE training.places before load (idempotent)
     volumes:
       - ./seed:/seed:ro
     command: >
@@ -28,10 +29,14 @@ services:
           pg_isready -h ${POSTGRES_HOST:-db} -p 5432 -U ${POSTGRES_USER:-postgres} && break;
           sleep 2;
         done;
-        echo '[seeder] Seeding GeoJSON (if any)';
-        /usr/local/bin/setup-geojson.py
+        echo '[seeder] Starting 60s loop';
+        while true; do
+          echo '[seeder] Import cycle'; date;
+          /usr/local/bin/setup-geojson.py || echo '[seeder] seed script returned non-zero';
+          sleep 60;
+        done
       "
-    restart: "no"
+    restart: unless-stopped
 
   adminer:
     image: adminer:latest
