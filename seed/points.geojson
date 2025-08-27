@@ -1,0 +1,12 @@
+{
+"type": "FeatureCollection",
+"name": "points",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { "title": "ჩემი წერტილი #1", "description": "აქ შეგიძლია ჩაწერო მოკლე აღწერა.", "md": "content/sample.md", "link": "https://example.com" }, "geometry": { "type": "Point", "coordinates": [ 44.8, 41.72 ] } },
+{ "type": "Feature", "properties": { "title": "ჩემი წერტილი #3", "description": "სატესტო წერტილი", "md": "content/saxelosno.md", "link": "https://www.google.com/maps/@41.7821046,44.7975991,115m/data=!3m1!1e3?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" }, "geometry": { "type": "Point", "coordinates": [ 44.797824292452802, 41.782146638024891 ] } },
+{ "type": "Feature", "properties": { "title": "SUBARU", "description": "სახელოსნო", "md": null, "link": "https://www.google.com/maps/place/42%C2%B008'00.8%22N+42%C2%B058'58.9%22E/@42.133547,42.9823943,229m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d42.133546!4d42.983038?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" }, "geometry": { "type": "Point", "coordinates": [ 42.982954892868676, 42.133590614181948 ] } },
+{ "type": "Feature", "properties": { "title": "SUBARU", "description": "სახელოსნო", "md": null, "link": "https://www.google.com/maps/place/42%C2%B017'43.9%22N+43%C2%B017'53.7%22E/@42.295519,43.2976173,229m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d42.295518!4d43.298261?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" }, "geometry": { "type": "Point", "coordinates": [ 43.298304334578276, 42.295559110565506 ] } },
+{ "type": "Feature", "properties": { "title": "სერვისი", "description": "ზეთები, ფილტრები", "md": null, "link": "https://www.google.com/maps/place/41%C2%B040'33.9%22N+44%C2%B049'59.2%22E/@41.676096,44.8324743,231m/data=!3m2!1e3!4b1!4m4!3m3!8m2!3d41.676095!4d44.833118?entry=ttu&g_ep=EgoyMDI1MDgxMy4wIKXMDSoASAFQAw%3D%3D" }, "geometry": { "type": "Point", "coordinates": [ 44.832796902759, 41.675925404552999 ] } }
+]
+}
