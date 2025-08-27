@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-echo "[startup] Running optional GeoJSON seeding (if any)..."
+echo "[startup] Optional GeoJSON seeding..."
 if [ -x /usr/local/bin/setup-geojson.py ]; then
   if ! /usr/local/bin/setup-geojson.py; then
-    echo "[startup] GeoJSON load failed or skipped (non-fatal)."
+    echo "[startup] GeoJSON seed skipped or failed (non-fatal)."
   fi
 fi
 echo "[startup] Done."

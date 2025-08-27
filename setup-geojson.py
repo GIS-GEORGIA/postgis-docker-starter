@@ -4,7 +4,6 @@ import json, os, glob, psycopg2
 DB = os.environ.get("POSTGRES_DB", "geo_db")
 USER = os.environ.get("POSTGRES_USER", "postgres")
 PASSWORD = os.environ.get("POSTGRES_PASSWORD", "postgres")
-# During init, we're running inside the same container as postgres
 HOST = os.environ.get("POSTGRES_HOST", "localhost")
 PORT = int(os.environ.get("POSTGRES_PORT", 5432))
 
@@ -14,7 +13,6 @@ TABLE = "training.places"
 if not os.path.isdir(SEED_DIR):
     print("[seed] No /seed directory mounted — skipping.")
     raise SystemExit(0)
-
 files = sorted(glob.glob(os.path.join(SEED_DIR, "*.geojson")))
 if not files:
     print("[seed] No *.geojson files — skipping.")
@@ -29,44 +27,25 @@ for path in files:
     print(f"[seed] -> {os.path.basename(path)}")
     with open(path, "r", encoding="utf-8") as f:
         data = json.load(f)
-    features = data.get("features", [])
-    for feat in features:
+    for feat in data.get("features", []):
         props = feat.get("properties", {}) or {}
         geom = feat.get("geometry")
         if not geom:
             continue
         cur.execute(
             f"""
-
-            INSERT INTO {TABLE} (name, props, geom)
-
-            VALUES (
-
-              %(name)s,
-
-              %(props)s::jsonb,
-
-              ST_SetSRID(ST_GeomFromGeoJSON(%(gjson)s), 4326)
-
-            )
-
-            """,
-
+INSERT INTO {TABLE} (name, props, geom)
+VALUES (
+  %(name)s,
+  %(props)s::jsonb,
+  ST_SetSRID(ST_GeomFromGeoJSON(%(gjson)s), 4326)
+)
+""",
             {
-
                 "name": props.get("name") or props.get("Name") or None,
-
                 "props": json.dumps(props),
-
                 "gjson": json.dumps(geom),
-
             },
-
         )
-
-cur.close()
-
-conn.close()
-
+cur.close(); conn.close()
 print("[seed] Done.")
-

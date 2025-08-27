@@ -1,18 +1,13 @@
--- Enable spatial extensions
+-- Enable core spatial extensions
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS postgis_topology;
 
--- Training schema
+-- Training schema and demo table
 CREATE SCHEMA IF NOT EXISTS training;
-
--- Example table
 CREATE TABLE IF NOT EXISTS training.places (
   id SERIAL PRIMARY KEY,
   name TEXT,
   props JSONB,
   geom GEOMETRY(Geometry, 4326)
 );
-
--- Spatial index
-CREATE INDEX IF NOT EXISTS idx_places_geom
-  ON training.places USING GIST (geom);
+CREATE INDEX IF NOT EXISTS idx_places_geom ON training.places USING GIST (geom);

@@ -1,0 +1,21 @@
+name: CI
+on:
+  push: { branches: ["**"] }
+  pull_request: { branches: ["**"] }
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t local/postgis:ci .
+      - run: docker compose up -d db
+      - name: Wait for Postgres
+        run: |
+          for i in {1..60}; do
+            if pg_isready -h localhost -p 5432 -U postgres; then break; fi
+            sleep 2
+          done
+      - name: PostGIS version
+        env: { PGPASSWORD: postgres }
+        run: psql "host=localhost port=5432 user=postgres dbname=geo_db" -c "SELECT PostGIS_Version();"
+      - run: docker compose down -v

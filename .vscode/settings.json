@@ -1,0 +1,12 @@
+{
+  "postgres.connections": [
+    {
+      "host": "localhost",
+      "port": 5432,
+      "user": "postgres",
+      "password": "postgres",
+      "database": "geo_db",
+      "name": "Local PostGIS"
+    }
+  ]
+}

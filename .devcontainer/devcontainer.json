@@ -1,0 +1,34 @@
+{
+  "name": "PostGIS Dev",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "db",
+  "runServices": [
+    "db",
+    "adminer"
+  ],
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "forwardPorts": [
+    5432,
+    8080
+  ],
+  "portsAttributes": {
+    "5432": {
+      "label": "PostgreSQL"
+    },
+    "8080": {
+      "label": "Adminer"
+    }
+  },
+  "overrideCommand": false,
+  "postStartCommand": "echo 'Waiting for Postgres...' && sleep 3 && pg_isready -h localhost -p 5432 -U ${POSTGRES_USER:-postgres} || true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-ossdata.vscode-postgresql",
+        "ms-python.python"
+      ]
+    }
+  }
+}

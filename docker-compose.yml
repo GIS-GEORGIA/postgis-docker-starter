@@ -21,21 +21,7 @@ services:
     ports:
       - "${ADMINER_PORT}:8080"
     environment:
-      # Preselect a driver and a server for convenience (user/pass/db from .env)
       ADMINER_DEFAULT_SERVER: db
-
-  # pgadmin:
-  #   image: dpage/pgadmin4:latest
-  #   container_name: pgadmin4
-  #   restart: unless-stopped
-  #   env_file: .env
-  #   depends_on:
-  #     - db
-  #   ports:
-  #     - "${PGADMIN_PORT}:80"
-  #   volumes:
-  #     - pgadmin:/var/lib/pgadmin
 
 volumes:
   pgdata:
-  # pgadmin:
