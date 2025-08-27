@@ -1,16 +1,37 @@
-version: "3.9"
 services:
   db:
     build: .
+    image: postgis-dev:latest
     container_name: postgis_db
     restart: unless-stopped
     env_file: .env
     ports:
-      - "${PG_PORT}:5432"
+      - "${PG_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./initdb:/docker-entrypoint-initdb.d
       - ./seed:/seed:ro
+
+  # Runs on every `docker compose up`, waits for DB to be ready, then imports seed/*.geojson
+  seeder:
+    image: postgis-dev:latest
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+    volumes:
+      - ./seed:/seed:ro
+    command: >
+      bash -lc "
+        echo '[seeder] Waiting for database...';
+        for i in {1..60}; do
+          pg_isready -h ${POSTGRES_HOST:-db} -p 5432 -U ${POSTGRES_USER:-postgres} && break;
+          sleep 2;
+        done;
+        echo '[seeder] Seeding GeoJSON (if any)';
+        /usr/local/bin/setup-geojson.py
+      "
+    restart: "no"
 
   adminer:
     image: adminer:latest
@@ -19,7 +40,7 @@ services:
     depends_on:
       - db
     ports:
-      - "${ADMINER_PORT}:8080"
+      - "${ADMINER_PORT:-8080}:8080"
     environment:
       ADMINER_DEFAULT_SERVER: db
 
