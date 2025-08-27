@@ -26,8 +26,9 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-ossdata.vscode-postgresql",
-        "ms-python.python"
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        "ms-ossdata.vscode-postgresql"
       ]
     }
   }

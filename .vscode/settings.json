@@ -1,12 +1,24 @@
 {
-  "postgres.connections": [
+  "sqltools.connections": [
     {
-      "host": "localhost",
+      "name": "Local Docker (host)",
+      "driver": "PostgreSQL",
+      "server": "localhost",
       "port": 5432,
-      "user": "postgres",
-      "password": "postgres",
       "database": "geo_db",
-      "name": "Local PostGIS"
+      "username": "postgres",
+      "password": "postgres",
+      "previewLimit": 50
+    },
+    {
+      "name": "Codespaces (inside devcontainer)",
+      "driver": "PostgreSQL",
+      "server": "localhost",
+      "port": 5432,
+      "database": "geo_db",
+      "username": "postgres",
+      "password": "postgres",
+      "previewLimit": 50
     }
   ]
 }
